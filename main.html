@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to J. Kaina's World!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap');
+
+        :root {
+            --primary-bg: #ffffff;
+            --text-main: #3a3b45;
+            --accent-purple: #9d8cf2;
+            --accent-blue: #70a1ff;
+            --accent-light-blue: #eef5ff;
+            --accent-light-purple: #f5f2ff;
+            --accent-yellow: #ffeaa7;
+            --accent-orange: #ffbe76;
+        }
+
+        body {
+            font-family: 'KaiTi', 'STKaiti', 'BiauKai', 'Zhi Mang Xing', serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            font-size: 1.05rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7f9fc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3cfe2;
+            border-radius: 20px;
+            border: 2px solid #f7f9fc;
+        }
+
+        .sketch-border {
+            border: 2.5px solid #4a5568;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            transition: all 0.3s ease-out;
+            box-shadow: 4px 4px 0px rgba(74, 85, 104, 0.15);
+        }
+        .sketch-border:hover {
+            transform: translateY(-4px);
+            box-shadow: 6px 8px 0px rgba(157, 140, 242, 0.25);
+            border-radius: 15px 225px 15px 255px/255px 15px 225px 15px;
+        }
+
+        .sketch-border-sm {
+            border: 2px solid #555964;
+            border-radius: 120px 10px 100px 10px/10px 100px 10px 120px;
+            transition: all 0.25s ease;
+        }
+
+        .photo-offset-border {
+            position: relative;
+        }
+        .photo-offset-border::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2.5px dashed var(--accent-orange);
+            border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .photo-offset-border::before {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border: 2.5px dashed var(--accent-yellow);
+            border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .pencil-divider {
+            height: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0 C150,90 350,110 500,90 C650,70 900,10 1200,90 L1200,120 L0,120 Z" fill="%23f4f8ff"/></svg>');
+            background-size: 100% 100%;
+        }
+
+        .floating-bubble {
+            animation: floatUpDown 6s ease-in-out infinite alternate;
+        }
+        .floating-bubble:nth-child(even) {
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+        .floating-bubble:nth-child(3n) {
+            animation-duration: 7s;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes floatUpDown {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-15px) rotate(3deg);
+            }
+        }
+
+        .zoom-cursor {
+            cursor: zoom-in;
+        }
+        .dot-cursor {
+            cursor: pointer;
+        }
+        .bubble-cursor {
+            cursor: help;
+        }
+
+        #nav-indicator {
+            position: absolute;
+            bottom: 4px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ===== SPLASH 全新样式 ===== */
+        #splash-screen {
+            background-color: #fcf9f5;
+        }
+        /* 背景图遮罩层 */
+        .splash-bg {
+            background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            transition: opacity 1.2s ease;
+        }
+        /* 每个阶段的弹出动画 */
+        .phase-pop {
+            animation: popNatural 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+        }
+        .phase-pop-out {
+            animation: popOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes popNatural {
+            0% {
+                opacity: 0;
+                transform: scale(0.65) translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        @keyframes popOut {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.7) translateY(-16px);
+            }
+        }
+
+        /* ===== ① 圆形头像 ===== */
+        .avatar-circle {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            box-shadow: 0 8px 28px rgba(157, 140, 242, 0.30), 0 0 0 3px rgba(157, 140, 242, 0.15);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+            /* 确保是正方形，居中显示 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar-circle:hover {
+            transform: scale(1.04) rotate(-2deg);
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ===== ② 圆角长框按钮（药丸形状） ===== */
+        .enter-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px 14px 28px;
+            border-radius: 9999px;
+            /* 完全圆角，形成长框 */
+            border: 3px solid #9d8cf2;
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(4px);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #5b4c8a;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(157, 140, 242, 0.15);
+            letter-spacing: 0.5px;
+            user-select: none;
+            font-family: inherit;
+            /* 继承字体 */
+        }
+        .enter-pill:hover {
+            transform: scale(1.05);
+            background: #f5f2ff;
+            border-color: #7b66d9;
+            box-shadow: 0 8px 32px rgba(157, 140, 242, 0.30);
+        }
+        .enter-pill:active {
+            transform: scale(0.94);
+        }
+        .enter-pill .enter-arrow {
+            font-size: 1.7rem;
+            line-height: 1;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .enter-pill:hover .enter-arrow {
+            transform: translateX(5px);
+        }
+
+        /* 标题微光 */
+        .splash-title {
+            text-shadow: 0 2px 20px rgba(157, 140, 242, 0.12);
+            letter-spacing: 0.04em;
+        }
+
+        /* 载入完成后 main 淡入 */
+        .main-fade-in {
+            animation: mainFade 1s ease forwards;
+        }
+        @keyframes mainFade {
+            0% {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== 轮播图 & 其他已有样式 ===== */
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 640px) {
+            .avatar-circle {
+                width: 72px;
+                height: 72px;
+            }
+            .enter-pill {
+                padding: 12px 24px 12px 20px;
+                font-size: 1rem;
+            }
+            .enter-pill .enter-arrow {
+                font-size: 1.4rem;
+            }
+            .splash-title {
+                font-size: 1.8rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- 全新 SPLASH SCREEN（头像正上方 + 圆角长框按钮）              -->
+    <!-- ============================================================ -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center select-none transition-all duration-1000 ease-out">
+
+        <!-- 背景图片（独立层，透明度可调） -->
+        <div class="splash-bg absolute inset-0 pointer-events-none"></div>
+
+        <!-- 额外柔和光晕 -->
+        <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/20"></div>
+
+        <!-- 内容容器（flex 列，居中） -->
+        <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-xl px-6">
+
+            <!-- 阶段 1: HI -->
+            <div id="splash-hi" class="text-7xl md:text-8xl font-bold text-slate-700 tracking-wider opacity-0 scale-75 translate-y-4">
+                HI
+            </div>
+
+            <!-- 阶段 2: 你好 -->
+            <div id="splash-nihao" class="text-6xl md:text-7xl font-bold text-indigo-400 tracking-wide opacity-0 scale-75 translate-y-4">
+                你好
+            </div>
+
+            <!-- 阶段 3: 最终内容（头像 + 标题 + 圆角长框按钮） -->
+            <div id="splash-final" class="flex flex-col items-center opacity-0 scale-90 translate-y-6">
+
+                <!-- ① 圆形头像（居中对齐，位于文字正上方） -->
+                <div class="avatar-circle mb-4">
+                    <!-- ★★★ 修改头像图片：将 src 替换为你本地的图片路径，例如 src="images/my-avatar.jpg" ★★★ -->
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200&fit=crop"
+                    alt="J. Kaina 头像" />
+                </div>
+
+                <!-- 主标题（正中央） -->
+                <h1 class="splash-title text-3xl sm:text-4xl md:text-5xl font-bold text-purple-400 text-center px-2 mb-6 leading-tight">
+                    Welcome to my channel!
+                </h1>
+
+                <!-- ② 圆角长框按钮（箭头 + click up 都在框内） -->
+                <button id="enter-btn" class="enter-pill">
+                    <span class="enter-arrow">→</span>
+                    click up
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 主页面导航 & 内容（保持不变）                                 -->
+    <!-- ============================================================ -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 py-4 px-6 md:px-12 flex justify-between items-center bg-white/20 backdrop-blur-md border-b border-slate-100">
+        <div class="font-bold text-xl text-slate-700 select-none cursor-default">
+            ✨ <span class="text-indigo-400">J</span>. Kaina
+        </div>
+        <div class="relative flex items-center">
+            <ul id="nav-list" class="flex space-x-6 md:space-x-10 text-base md:text-lg font-bold text-slate-600">
+                <li class="relative"><a href="#intro" class="nav-link px-2 py-1 block hover:text-indigo-500 transition-colors">Home</a></li>
+                <li class="relative"><a href="#basic" class="nav-link px-2 py-1 block hover:text-indigo-500 transition-colors">Basic Info</a></li>
+                <li class="relative"><a href="#experience" class="nav-link px-2 py-1 block hover:text-indigo-500 transition-colors">Experience</a></li>
+                <li class="relative"><a href="#hobbies" class="nav-link px-2 py-1 block hover:text-indigo-500 transition-colors">Hobbies</a></li>
+                <li class="relative"><a href="#friends" class="nav-link px-2 py-1 block hover:text-indigo-500 transition-colors">Make Friends</a></li>
+            </ul>
+            <div id="nav-indicator"></div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000 pt-16">
+
+        <!-- SECTION 1: INTRO -->
+        <section id="intro" class="min-h-screen py-16 px-6 md:px-16 flex flex-col justify-center relative overflow-hidden bg-gradient-to-b from-[#f8faff] to-white">
+            <div class="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
+                <div class="w-full md:w-7/12 flex flex-col justify-center relative z-20">
+                    <h1 class="text-5xl md:text-6xl font-black text-slate-800 tracking-wider mb-6">
+                        HI, 我是姜凯娜。
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-xl">
+                        I人，LIKE机器人，脑洞大开。热爱收集生活的美好碎片。
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="floating-bubble sketch-border-sm bg-blue-50 text-blue-600 px-4 py-2 font-bold cursor-default flex items-center gap-1">
+                            🎨 创意美学
+                        </div>
+                        <div class="floating-bubble sketch-border-sm bg-purple-50 text-purple-600 px-4 py-2 font-bold cursor-default flex items-center gap-1">
+                            🧠 INTP
+                        </div>
+                        <div class="floating-bubble sketch-border-sm bg-indigo-50 text-indigo-600 px-4 py-2 font-bold cursor-default flex items-center gap-1">
+                            💻 游戏玩家
+                        </div>
+                        <div class="floating-bubble sketch-border-sm bg-amber-50 text-amber-700 px-4 py-2 font-bold cursor-default flex items-center gap-1">
+                            🐾 猫狗控
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button id="like-btn" onclick="increaseLike()" class="sketch-border px-5 py-2.5 bg-white text-rose-500 hover:bg-rose-50 font-bold flex items-center gap-2 transition-all">
+                            💖 点赞 <span id="like-count">128</span>
+                        </button>
+                        <button onclick="copyEmail()" class="sketch-border px-5 py-2.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold transition-all">
+                            ✉️ 联系我
+                        </button>
+                    </div>
+                </div>
+                <div class="w-full md:w-5/12 flex justify-center items-center">
+                    <div class="relative w-72 h-80 md:w-80 md:h-[380px] photo-offset-border">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600" alt="ME" class="w-full h-full object-cover rounded-3xl border-2 border-slate-700 bg-slate-50 zoom-cursor p-2">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: BASIC INFO -->
+        <section id="basic" class="min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center relative bg-[#faf9ff]">
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="mb-10">
+                    <span class="text-sm uppercase tracking-widest text-indigo-400 font-bold">Details</span>
+                    <h2 class="text-4xl font-black text-slate-800">Basic Information</h2>
+                </div>
+                <div class="sketch-border bg-white p-6 md:p-10 relative overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <tbody>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm w-1/4">NAME</td>
+                                <td class="py-5 px-4 text-xl font-bold text-slate-800">姜凯娜</td>
+                            </tr>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">AGE</td>
+                                <td class="py-5 px-4 text-slate-700">保密 🤫</td>
+                            </tr>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all relative group">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">Hometown</td>
+                                <td class="py-5 px-4 text-slate-700">
+                                    <span class="underline decoration-indigo-400 decoration-dashed cursor-pointer text-indigo-600 font-bold">河南濮阳 🌟</span>
+                                    <div class="absolute left-1/4 md:left-1/3 top-1/2 -translate-y-1/2 z-30 w-80 p-5 bg-white sketch-border opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+                                        <h4 class="font-bold text-indigo-600 text-lg mb-2">欢迎游玩！👋</h4>
+                                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                                            濮阳市是中华民族重要发祥地之一，被誉为“华夏龙都”。同时这里也是造字圣人<b>仓颉</b>的故里，拥有深厚的文化积淀与非凡的民间艺术！
+                                        </p>
+                                        <img src="https://5b0988e595225.cdn.sohucs.com/images/20190502/beb3f406d5bd42598895ede77e8b2457.jpeg" alt="濮阳裹凉皮" class="w-full h-24 object-cover rounded-lg">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">HBD</td>
+                                <td class="py-5 px-4 text-slate-700">天蝎座 🦂</td>
+                            </tr>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">TEL</td>
+                                <td class="py-5 px-4">
+                                    <span class="text-indigo-600 hover:underline cursor-pointer font-bold" onclick="copyEmail()" title="点击复制邮箱">
+                                        polarhey@163.com
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">SKILLS</td>
+                                <td class="py-5 px-4">
+                                    <div class="flex flex-wrap gap-2.5">
+                                        <div onclick="showSkillInfo('fe')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full text-sm font-bold sketch-border-sm cursor-pointer transition-all">
+                                            娱乐 ⚙️
+                                        </div>
+                                        <div onclick="showSkillInfo('ui')" class="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-full text-sm font-bold sketch-border-sm cursor-pointer transition-all">
+                                            手绘交互 ✨
+                                        </div>
+                                        <div onclick="showSkillInfo('ux')" class="px-3 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-full text-sm font-bold sketch-border-sm cursor-pointer transition-all">
+                                            创意交互 🧩
+                                        </div>
+                                    </div>
+                                    <div id="skill-desc-box" class="mt-4 p-3 bg-indigo-50/50 rounded-xl text-sm text-slate-600 hidden sketch-border-sm"></div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-indigo-50/20 transition-all relative group">
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">PERSONALITY</td>
+                                <td class="py-5 px-4">
+                                    <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-md font-black text-sm cursor-help">INTP</span>
+                                    <div class="absolute right-10 bottom-full z-30 w-52 p-4 bg-white sketch-border text-center opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+                                        <div class="w-16 h-16 mx-auto bg-amber-200 rounded-full relative mb-2 flex items-center justify-center border-2 border-slate-700 overflow-hidden">
+                                            <div class="absolute top-2 w-10 h-6 bg-amber-100 rounded-full"></div>
+                                            <div class="w-4 h-4 bg-white border border-slate-700 rounded-full absolute left-3 top-4"></div>
+                                            <div class="w-4 h-4 bg-white border border-slate-700 rounded-full absolute right-3 top-4"></div>
+                                            <div class="w-1.5 h-1.5 bg-slate-800 rounded-full absolute left-4 top-5 animate-pulse"></div>
+                                            <div class="w-1.5 h-1.5 bg-slate-800 rounded-full absolute right-4 top-5 animate-pulse"></div>
+                                            <div class="w-5 h-2 bg-pink-400 rounded-full absolute bottom-2"></div>
+                                        </div>
+                                        <span class="text-xs font-bold text-slate-700 block">药水姐 🧪</span>
+                                        <span class="text-sm font-black text-purple-600 block animate-bounce mt-1">“您好，欢迎！”</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: EXPERIENCE -->
+        <section id="experience" class="min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center bg-white">
+            <div class="w-full max-w-6xl mx-auto">
+                <div class="mb-12">
+                    <span class="text-sm uppercase tracking-widest text-indigo-400 font-bold">Timeline</span>
+                    <h2 class="text-4xl font-black text-slate-800">Relevant Experience</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-stretch mb-20">
+                    <div class="md:col-span-6 flex flex-col justify-center">
+                        <h3 class="text-2xl font-black text-slate-800 border-b border-indigo-100 pb-3 mb-6 uppercase">Undergraduate</h3>
+                        <div id="ug-timeline" class="space-y-4">
+                            <div onclick="switchExpNode('ug', 0)" class="exp-item active sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
+                                <span class="text-xs text-indigo-500 font-bold">2020 - 2021</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">比赛经历</h4>
+                                <p class="text-sm text-slate-600 mt-1">深度参与各类创新创业、市场调查大赛，荣获国家三等奖。</p>
+                            </div>
+                            <div onclick="switchExpNode('ug', 1)" class="exp-item sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
+                                <span class="text-xs text-indigo-500 font-bold">2021 - 2023</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">志愿者经历</h4>
+                                <p class="text-sm text-slate-600 mt-1">在暑期公共赛事、特殊儿童疗愈帮扶项目中提供志愿服务。在协作中获取幸福感与实践经验。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-6 flex justify-center items-center">
+                        <div class="sketch-border w-full h-[360px] max-w-lg p-3 bg-white relative group overflow-hidden" id="ug-carousel" onmouseenter="pauseCarousel('ug')" onmouseleave="startCarousel('ug')">
+                            <div class="relative w-full h-full overflow-hidden rounded-xl">
+                                <div class="carousel-slide active" data-index="0">
+                                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                </div>
+                                <div class="carousel-slide" data-index="1">
+                                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30">
+                                <button onclick="prevSlide('ug')" class="w-10 h-10 rounded-full bg-white/95 border border-slate-400 flex items-center justify-center hover:bg-slate-50 pointer-events-auto">
+                                    <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button onclick="nextSlide('ug')" class="w-10 h-10 rounded-full bg-white/95 border border-slate-400 flex items-center justify-center hover:bg-slate-50 pointer-events-auto">
+                                    <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-stretch">
+                    <div class="md:col-span-6 flex justify-center items-center order-2 md:order-1">
+                        <div class="sketch-border w-full h-[360px] max-w-lg p-3 bg-white relative group overflow-hidden" id="pg-carousel" onmouseenter="pauseCarousel('pg')" onmouseleave="startCarousel('pg')">
+                            <div class="relative w-full h-full overflow-hidden rounded-xl">
+                                <div class="carousel-slide active" data-index="0">
+                                    <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                </div>
+                                <div class="carousel-slide" data-index="1">
+                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                </div>
+                                <div class="carousel-slide" data-index="2">
+                                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30">
+                                <button onclick="prevSlide('pg')" class="w-10 h-10 rounded-full bg-white/95 border border-slate-400 flex items-center justify-center hover:bg-slate-50 pointer-events-auto">
+                                    <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button onclick="nextSlide('pg')" class="w-10 h-10 rounded-full bg-white/95 border border-slate-400 flex items-center justify-center hover:bg-slate-50 pointer-events-auto">
+                                    <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-6 flex flex-col justify-center order-1 md:order-2">
+                        <h3 class="text-2xl font-black text-slate-800 border-b border-indigo-100 pb-3 mb-6 uppercase text-right">Graduate</h3>
+                        <div id="pg-timeline" class="space-y-4 text-right">
+                            <div onclick="switchExpNode('pg', 0)" class="exp-item active sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
+                                <span class="text-xs text-purple-500 font-bold">2023 - Summer</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">寒暑假实践经历</h4>
+                                <p class="text-sm text-slate-600 mt-1">探寻非物质文化遗产印记，设计沉浸式交互展示装置，以此赋能民俗工艺新表达。</p>
+                            </div>
+                            <div onclick="switchExpNode('pg', 1)" class="exp-item sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
+                                <span class="text-xs text-purple-500 font-bold">2024 - Internship</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">前端开发实习</h4>
+                                <p class="text-sm text-slate-600 mt-1">主导平台体验优化以及动态大屏、微前端模块功能接入，深耕前端可用性测试。</p>
+                            </div>
+                            <div onclick="switchExpNode('pg', 2)" class="exp-item sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
+                                <span class="text-xs text-purple-500 font-bold">Everyday Life</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">实习美食记录</h4>
+                                <p class="text-sm text-slate-600 mt-1">擅长捕捉工作间隙的美食治愈瞬间，探店高人气民间大排档与地方小吃摊。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: HOBBIES -->
+        <section id="hobbies" class="min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center bg-[#fdfcf9] relative">
+            <div class="w-full max-w-4xl mx-auto">
+                <div class="mb-10 text-center md:text-left">
+                    <span class="text-sm uppercase tracking-widest text-indigo-400 font-bold">Interests</span>
+                    <h2 class="text-4xl font-black text-slate-800">Hobbies</h2>
+                </div>
+                <div class="sketch-border bg-white p-6 relative flex flex-col mb-10 select-none">
+                    <div class="flex justify-between text-xs text-slate-400 mb-2 px-1 font-bold">
+                        <span>随便看看 (30%)</span>
+                        <span>最爱这个了 (100%)</span>
+                    </div>
+                    <div class="relative w-full h-3 bg-slate-100 rounded-full border border-slate-400" id="slider-track">
+                        <div class="absolute top-0 left-0 h-full bg-indigo-300 rounded-full" id="slider-fill" style="width: 30%;"></div>
+                        <div id="nodes-container"></div>
+                        <div id="slider-thumb" class="absolute top-1/2 -translate-y-1/2 -ml-6 w-12 h-12 cursor-grab active:cursor-grabbing transition-transform duration-100 flex items-center justify-center z-30" style="left: 30%;">
+                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                                <circle cx="50" cy="55" r="30" fill="#fff" stroke="#4a5568" stroke-width="3"/>
+                                <path d="M 28 35 L 35 15 L 48 30" fill="#fff" stroke="#4a5568" stroke-width="3" stroke-linejoin="round"/>
+                                <path d="M 72 35 L 65 15 L 52 30" fill="#fff" stroke="#4a5568" stroke-width="3" stroke-linejoin="round"/>
+                                <circle cx="38" cy="48" r="4" fill="#4a5568"/>
+                                <circle cx="62" cy="48" r="4" fill="#4a5568"/>
+                                <ellipse cx="50" cy="60" rx="6" ry="4" fill="#4a5568"/>
+                                <path d="M 46 64 C 48 68, 52 68, 54 64" fill="none" stroke="#4a5568" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="sketch-border bg-white p-6 md:p-10 min-h-[460px] relative flex flex-col">
+                    <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <h3 id="hobby-title" class="text-3xl font-black text-slate-800">打羽毛球 🏸</h3>
+                        <span id="hobby-badge" class="mt-2 md:mt-0 px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider">日常活动</span>
+                    </div>
+                    <div class="w-full flex-grow flex flex-col gap-6">
+                        <div class="relative w-full h-[320px] bg-slate-50 rounded-2xl overflow-hidden border border-dashed border-slate-300 flex items-center justify-center p-2">
+                            <img id="hobby-single-img" src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-xl zoom-cursor">
+                            <div id="hobby-bead-slider" class="w-full h-full hidden relative" onmouseenter="pauseCarousel('bead')" onmouseleave="startCarousel('bead')">
+                                <div class="relative w-full h-full overflow-hidden rounded-xl">
+                                    <div class="carousel-slide active" data-index="0">
+                                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    </div>
+                                    <div class="carousel-slide" data-index="1">
+                                        <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                    <span onclick="setBeadSlide(0)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50 active-dot"></span>
+                                    <span onclick="setBeadSlide(1)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="hobby-desc" class="text-sm text-slate-500 italic text-center px-4">一有空闲就和好朋友相约球场。在汗水与羽球飞舞中，忘却所有压力！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: MAKE FRIENDS -->
+        <section id="friends" class="min-h-screen py-20 px-6 md:px-16 flex flex-col justify-center bg-white relative">
+            <div class="w-full max-w-2xl mx-auto">
+                <div class="mb-10 text-center">
+                    <span class="text-sm uppercase tracking-widest text-indigo-400 font-bold">Connect</span>
+                    <h2 class="text-4xl font-black text-slate-800">Make Friends</h2>
+                </div>
+                <div class="sketch-border bg-[#fdfdfd] p-8 md:p-12 relative">
+                    <div class="absolute -top-6 -right-6 w-14 h-14 bg-indigo-50 rounded-full border-2 border-slate-700 flex items-center justify-center transform rotate-12 shadow-sm z-10">
+                        <span class="text-2xl">✉️</span>
+                    </div>
+                    <form id="friend-form" class="space-y-6 text-slate-700">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex flex-col">
+                                <label class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Your Name / 姓名</label>
+                                <input type="text" id="form-name" required class="sketch-border-sm px-4 py-2.5 bg-white focus:outline-none focus:border-indigo-400 text-slate-700" placeholder="怎么称呼您呢？">
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Gender / 性别</label>
+                                <select id="form-gender" required class="sketch-border-sm px-4 py-2.5 bg-white focus:outline-none focus:border-indigo-400 text-slate-700 cursor-pointer">
+                                    <option value="" disabled selected>请选择性别</option>
+                                    <option value="male">男生 🙋‍♂️</option>
+                                    <option value="female">女生 🙋‍♀️</option>
+                                    <option value="other">其他/保密 🦄</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Hobbies / 兴趣爱好</label>
+                            <input type="text" id="form-hobby" class="sketch-border-sm px-4 py-2.5 bg-white focus:outline-none focus:border-indigo-400 text-slate-700" placeholder="分享一下你平时的喜好呀？">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Contact Info / 联系方式</label>
+                            <input type="text" id="form-contact" required class="sketch-border-sm px-4 py-2.5 bg-white focus:outline-none focus:border-indigo-400 text-slate-700" placeholder="微信 / QQ / 邮箱 均可">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Something Else / 自由填写</label>
+                            <textarea id="form-msg" rows="4" class="sketch-border-sm px-4 py-2.5 bg-white focus:outline-none focus:border-indigo-400 text-slate-700 resize-none" placeholder="还有什么好玩的事或者槽点想吐槽的吗～"></textarea>
+                        </div>
+                        <div class="text-center pt-3">
+                            <button type="submit" class="sketch-border bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold px-12 py-3 transition-all transform active:scale-95 cursor-pointer">
+                                发送卡片 💌
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TOAST -->
+    <div id="custom-toast" class="fixed top-24 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-lg text-sm z-50 opacity-0 pointer-events-none transition-all duration-300">
+        复制成功！
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JavaScript（Splash 逻辑 + 所有原有功能）                      -->
+    <!-- ============================================================ -->
+    <script>
+        // ================================================================
+        // 1. SPLASH 全新自然弹出动画
+        // ================================================================
+        const splashScreen = document.getElementById('splash-screen');
+        const enterBtn = document.getElementById('enter-btn');
+        const mainContent = document.getElementById('main-content');
+
+        const phaseHi = document.getElementById('splash-hi');
+        const phaseNihao = document.getElementById('splash-nihao');
+        const phaseFinal = document.getElementById('splash-final');
+
+        let splashFinished = false;
+
+        const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+        function resetPhases() {
+            [phaseHi, phaseNihao, phaseFinal].forEach(el => {
+                el.className = '';
+                el.style.opacity = '0';
+                el.style.transform = 'scale(0.75) translateY(12px)';
+                el.style.pointerEvents = 'none';
+            });
+        }
+
+        function popIn(el) {
+            el.style.opacity = '';
+            el.style.transform = '';
+            el.style.pointerEvents = '';
+            el.className = 'phase-pop';
+        }
+
+        function popOut(el) {
+            el.className = 'phase-pop-out';
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'scale(0.7) translateY(-16px)';
+                el.className = '';
+            }, 550);
+        }
+
+        async function runSplashSequence() {
+            resetPhases();
+
+            await wait(300);
+            if (splashFinished) return;
+            popIn(phaseHi);
+
+            await wait(1200);
+            if (splashFinished) return;
+            popOut(phaseHi);
+
+            await wait(400);
+            if (splashFinished) return;
+            popIn(phaseNihao);
+
+            await wait(1200);
+            if (splashFinished) return;
+            popOut(phaseNihao);
+
+            await wait(400);
+            if (splashFinished) return;
+            phaseFinal.style.opacity = '0';
+            phaseFinal.style.transform = 'scale(0.85) translateY(18px)';
+            phaseFinal.className = '';
+            requestAnimationFrame(() => {
+                phaseFinal.style.opacity = '';
+                phaseFinal.style.transform = '';
+                phaseFinal.className = 'phase-pop';
+            });
+            phaseFinal.style.pointerEvents = 'auto';
+        }
+
+        function enterMain() {
+            if (splashFinished) return;
+            splashFinished = true;
+
+            splashScreen.style.transition = 'opacity 0.9s ease, transform 0.9s ease';
+            splashScreen.style.opacity = '0';
+            splashScreen.style.transform = 'scale(1.02)';
+
+            mainContent.classList.add('main-fade-in');
+            mainContent.style.opacity = '1';
+
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+                initHobbySlider();
+                initScrollObserver();
+                startCarousel('ug');
+                startCarousel('pg');
+            }, 1000);
+        }
+
+        enterBtn.addEventListener('click', enterMain);
+
+        splashScreen.addEventListener('click', (e) => {
+            if (splashFinished) return;
+            if (e.target.closest('#enter-btn')) return;
+
+            splashFinished = true;
+            [phaseHi, phaseNihao].forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'scale(0.7) translateY(-16px)';
+                el.className = '';
+                el.style.pointerEvents = 'none';
+            });
+
+            phaseFinal.style.opacity = '0';
+            phaseFinal.style.transform = 'scale(0.85) translateY(18px)';
+            phaseFinal.className = '';
+            phaseFinal.style.pointerEvents = 'auto';
+            requestAnimationFrame(() => {
+                phaseFinal.style.opacity = '';
+                phaseFinal.style.transform = '';
+                phaseFinal.className = 'phase-pop';
+            });
+            splashFinished = false;
+            window.__splashSkipped = true;
+        });
+
+        window.addEventListener('load', () => {
+            if (!window.__splashSkipped) {
+                runSplashSequence();
+            }
+        });
+
+        // ================================================================
+        // 2. 所有原有功能（导航、点赞、复制、技能、轮播、滑块、表单等）
+        // ================================================================
+
+        const links = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        const indicator = document.getElementById('nav-indicator');
+
+        function moveIndicator(targetLink) {
+            if (!targetLink) return;
+            const rect = targetLink.getBoundingClientRect();
+            const parentRect = targetLink.parentElement.parentElement.getBoundingClientRect();
+            indicator.style.left = `${rect.left - parentRect.left}px`;
+            indicator.style.width = `${rect.width}px`;
+        }
+
+        function initScrollObserver() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '-30% 0px -60% 0px',
+                threshold: 0
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        links.forEach(link => {
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('text-indigo-500');
+                                moveIndicator(link);
+                            } else {
+                                link.classList.remove('text-indigo-500');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+            sections.forEach(section => observer.observe(section));
+            window.addEventListener('resize', () => {
+                const activeLink = document.querySelector('.nav-link.text-indigo-500');
+                moveIndicator(activeLink);
+            });
+            setTimeout(() => {
+                const first = document.querySelector('.nav-link');
+                if (first) {
+                    first.classList.add('text-indigo-500');
+                    moveIndicator(first);
+                }
+            }, 200);
+        }
+
+        function triggerToast(msg) {
+            const toast = document.getElementById('custom-toast');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2000);
+        }
+
+        function copyEmail() {
+            const target = "polarhey@163.com";
+            const tempBox = document.createElement("textarea");
+            tempBox.value = target;
+            document.body.appendChild(tempBox);
+            tempBox.select();
+            try {
+                document.execCommand('copy');
+                triggerToast("🎉 邮箱复制成功！常来写信沟通哦～");
+            } catch (err) {
+                console.error(err);
+            }
+            document.body.removeChild(tempBox);
+        }
+
+        let clickedLike = false;
+
+        function increaseLike() {
+            if (clickedLike) return;
+            const container = document.getElementById('like-count');
+            let val = parseInt(container.textContent);
+            container.textContent = val + 1;
+            clickedLike = true;
+            document.getElementById('like-btn').classList.add('bg-rose-50', 'border-rose-300');
+            triggerToast("❤️ 谢谢你的真心点赞！");
+        }
+
+        const skillsCollection = {
+            fe: "熟练掌握现代前端开发规范，对 Tailwind CSS、模块组件封装以及大屏交互有深厚的还原经验与调优积累。",
+            ui: "推崇手绘情感化微交互风格。致力于开发富有巧思的小组件，将蜡笔小新或西高地等手绘元素无缝融合到排版框架中。",
+            ux: "擅长基于日常情境策划创意体验交互。结合了INTP独特的理性脑与细腻的生活收集癖好。"
+        };
+
+        function showSkillInfo(key) {
+            const container = document.getElementById('skill-desc-box');
+            container.textContent = skillsCollection[key];
+            container.classList.remove('hidden');
+        }
+
+        const mediaCarousels = {
+            ug: { activeIndex: 0, maxCount: 2, handle: null, selector: 'ug-carousel' },
+            pg: { activeIndex: 0, maxCount: 3, handle: null, selector: 'pg-carousel' },
+            bead: { activeIndex: 0, maxCount: 2, handle: null, selector: 'hobby-bead-slider' }
+        };
+
+        function switchExpNode(group, index) {
+            const targetTimeline = document.getElementById(`${group}-timeline`);
+            const nodes = targetTimeline.querySelectorAll('.exp-item');
+            nodes.forEach((n, i) => {
+                if (i === index) n.classList.add('active');
+                else n.classList.remove('active');
+            });
+            goToSlide(group, index);
+        }
+
+        function updateCarouselDisplay(group) {
+            const wrapper = document.getElementById(mediaCarousels[group].selector);
+            if (!wrapper) return;
+            const slides = wrapper.querySelectorAll('.carousel-slide');
+            slides.forEach((slide, i) => {
+                if (i === mediaCarousels[group].activeIndex) slide.classList.add('active');
+                else slide.classList.remove('active');
+            });
+        }
+
+        function prevSlide(group) {
+            const data = mediaCarousels[group];
+            data.activeIndex = (data.activeIndex - 1 + data.maxCount) % data.maxCount;
+            updateCarouselDisplay(group);
+        }
+
+        function nextSlide(group) {
+            const data = mediaCarousels[group];
+            data.activeIndex = (data.activeIndex + 1) % data.maxCount;
+            updateCarouselDisplay(group);
+        }
+
+        function goToSlide(group, idx) {
+            mediaCarousels[group].activeIndex = idx;
+            updateCarouselDisplay(group);
+        }
+
+        function startCarousel(group) {
+            if (mediaCarousels[group].maxCount > 1) {
+                clearInterval(mediaCarousels[group].handle);
+                mediaCarousels[group].handle = setInterval(() => nextSlide(group), 3500);
+            }
+        }
+
+        function pauseCarousel(group) {
+            clearInterval(mediaCarousels[group].handle);
+        }
+
+        function setBeadSlide(idx) {
+            goToSlide('bead', idx);
+        }
+
+        const hobbiesDatabase = [
+            { pos: 30, title: "打羽毛球 🏸", label: "日常活动", text: "一有空闲就和好朋友相约球场。在汗水与羽球飞舞中，忘却所有压力！", type: "single",
+                src: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800" },
+            { pos: 50, title: "王者荣耀 🎮", label: "段位争霸", text: "偶尔与老友激情开黑，默契的配合可以瞬间翻盘，体验策略博弈和指尖流光的魅力。", type: "single",
+                src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" },
+            { pos: 60, title: "燕云十六声 ⚔️", label: "国风武侠", text: "壮丽悠远的武侠世界。漫步于无缝的大好山河中，感受原汁原味的古典中式武侠情结。", type: "single",
+                src: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800" },
+            { pos: 70, title: "洛克王国 🌟", label: "童年情怀", text: "承载着童年幻想的神奇大陆。那一首首轻快动听的小曲总能瞬间带回安宁舒适的避风港湾。", type: "single",
+                src: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=800" },
+            { pos: 80, title: "拼豆手作 🧩", label: "拼豆展示", text: "把彩色的微小颗粒拼凑组合，通过温控熨平。这是只属于我自己的像素艺术乐园！", type: "carousel", src: "carousel" },
+            { pos: 100, title: "悬疑剧爱好者 🕵️‍♂️", label: "神剧发烧友", text: "重度烧脑迷，极度追求精细宏伟的悬疑剧情。在重重线索推演中探寻真理与人性边界的博弈。", type: "single",
+                src: "https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800" }
+        ];
+
+        const sliderTrack = document.getElementById('slider-track');
+        const sliderThumb = document.getElementById('slider-thumb');
+        const sliderFill = document.getElementById('slider-fill');
+        const nodesContainer = document.getElementById('nodes-container');
+        const labelTitle = document.getElementById('hobby-title');
+        const labelBadge = document.getElementById('hobby-badge');
+        const labelDesc = document.getElementById('hobby-desc');
+        const singleImgElem = document.getElementById('hobby-single-img');
+        const multiBeadElem = document.getElementById('hobby-bead-slider');
+
+        let isDraggingSlider = false;
+        let activeHobbyIndex = 0;
+
+        function initHobbySlider() {
+            nodesContainer.innerHTML = '';
+            hobbiesDatabase.forEach((hobby, index) => {
+                const nodePoint = document.createElement('div');
+                nodePoint.className =
+                    `absolute w-4 h-4 bg-white border-2 border-slate-400 rounded-full top-1/2 -translate-y-1/2 dot-cursor transition-all hover:scale-125 z-10`;
+                nodePoint.style.left = `${hobby.pos}%`;
+                nodePoint.style.transform = `translateX(-50%) translateY(-50%)`;
+                nodePoint.addEventListener('click', () => {
+                    setSliderPosition(hobby.pos);
+                });
+                nodesContainer.appendChild(nodePoint);
+            });
+            setSliderPosition(30);
+        }
+
+        function setSliderPosition(percent) {
+            percent = Math.max(0, Math.min(100, percent));
+            sliderThumb.style.left = `${percent}%`;
+            sliderFill.style.width = `${percent}%`;
+            updateHobbyContent(percent);
+        }
+
+        function updateHobbyContent(percent) {
+            let closestItem = null;
+            let minDiff = 101;
+            let chosenIdx = -1;
+            hobbiesDatabase.forEach((item, idx) => {
+                const diff = Math.abs(item.pos - percent);
+                if (diff < minDiff && diff < 8) {
+                    minDiff = diff;
+                    closestItem = item;
+                    chosenIdx = idx;
+                }
+            });
+            if (closestItem && chosenIdx !== activeHobbyIndex) {
+                activeHobbyIndex = chosenIdx;
+                labelTitle.textContent = closestItem.title;
+                labelBadge.textContent = closestItem.label;
+                labelDesc.textContent = closestItem.text;
+                const nodes = nodesContainer.children;
+                for (let i = 0; i < nodes.length; i++) {
+                    if (i === chosenIdx) {
+                        nodes[i].className =
+                            "absolute w-4.5 h-4.5 bg-indigo-100 border-2 border-indigo-400 rounded-full top-1/2 -translate-y-1/2 dot-cursor scale-110 z-10";
+                    } else {
+                        nodes[i].className =
+                            "absolute w-4 h-4 bg-white border-2 border-slate-400 rounded-full top-1/2 -translate-y-1/2 dot-cursor z-10";
+                    }
+                }
+                if (closestItem.type === 'single') {
+                    multiBeadElem.classList.add('hidden');
+                    pauseCarousel('bead');
+                    singleImgElem.src = closestItem.src;
+                    singleImgElem.classList.remove('hidden');
+                } else {
+                    singleImgElem.classList.add('hidden');
+                    multiBeadElem.classList.remove('hidden');
+                    startCarousel('bead');
+                }
+            }
+        }
+
+        sliderThumb.addEventListener('mousedown', (e) => {
+            isDraggingSlider = true;
+            document.body.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!isDraggingSlider) return;
+            const trackBoundaries = sliderTrack.getBoundingClientRect();
+            let distance = e.clientX - trackBoundaries.left;
+            let percent = (distance / trackBoundaries.width) * 100;
+            setSliderPosition(percent);
+        });
+        window.addEventListener('mouseup', () => {
+            if (isDraggingSlider) {
+                isDraggingSlider = false;
+                document.body.style.cursor = 'default';
+                const currentPercent = parseFloat(sliderThumb.style.left);
+                let closestNode = hobbiesDatabase.reduce((prev, curr) =>
+                    Math.abs(curr.pos - currentPercent) < Math.abs(prev.pos - currentPercent) ? curr : prev
+                );
+                sliderThumb.style.transition = 'left 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+                sliderFill.style.transition = 'width 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+                setSliderPosition(closestNode.pos);
+                setTimeout(() => {
+                    sliderThumb.style.transition = 'none';
+                    sliderFill.style.transition = 'none';
+                }, 250);
+            }
+        });
+        sliderThumb.addEventListener('touchstart', () => { isDraggingSlider = true; }, { passive: true });
+        window.addEventListener('touchmove', (e) => {
+            if (!isDraggingSlider) return;
+            const trackBoundaries = sliderTrack.getBoundingClientRect();
+            let distance = e.touches[0].clientX - trackBoundaries.left;
+            let percent = (distance / trackBoundaries.width) * 100;
+            setSliderPosition(percent);
+        }, { passive: true });
+        window.addEventListener('touchend', () => {
+            if (isDraggingSlider) {
+                isDraggingSlider = false;
+                const currentPercent = parseFloat(sliderThumb.style.left);
+                let closestNode = hobbiesDatabase.reduce((prev, curr) =>
+                    Math.abs(curr.pos - currentPercent) < Math.abs(prev.pos - currentPercent) ? curr : prev
+                );
+                sliderThumb.style.transition = 'left 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+                sliderFill.style.transition = 'width 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+                setSliderPosition(closestNode.pos);
+                setTimeout(() => {
+                    sliderThumb.style.transition = 'none';
+                    sliderFill.style.transition = 'none';
+                }, 250);
+            }
+        });
+
+        document.getElementById('friend-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const sender = document.getElementById('form-name').value;
+            triggerToast(`🎈 成功！谢谢 ${sender} 的专属卡片，我会尽快查看的！`);
+            document.getElementById('friend-form').reset();
+        });
+
+        // 暴露全局函数
+        window.copyEmail = copyEmail;
+        window.increaseLike = increaseLike;
+        window.showSkillInfo = showSkillInfo;
+        window.switchExpNode = switchExpNode;
+        window.prevSlide = prevSlide;
+        window.nextSlide = nextSlide;
+        window.startCarousel = startCarousel;
+        window.pauseCarousel = pauseCarousel;
+        window.setBeadSlide = setBeadSlide;
+        window.initHobbySlider = initHobbySlider;
+        window.initScrollObserver = initScrollObserver;
+    </script>
+</body>
+</html>
