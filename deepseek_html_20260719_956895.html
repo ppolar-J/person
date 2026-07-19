@@ -8,22 +8,30 @@
     <script src="https://cdn.tailwindcss.com">
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Caveat:wght@400;700&family=Patrick+Hand&display=swap');
 
         :root {
-            --primary-bg: #ffffff;
-            --text-main: #3a3b45;
-            --accent-purple: #9d8cf2;
-            --accent-blue: #70a1ff;
-            --accent-light-blue: #eef5ff;
-            --accent-light-purple: #f5f2ff;
-            --accent-yellow: #ffeaa7;
-            --accent-orange: #ffbe76;
+            --primary-bg: #f4f0e6;
+            --paper-bg: #f7f3ea;
+            --text-main: #2b2723;
+            --ink-dark: #1c1a17;
+            --ink-mid: #4a443d;
+            --ink-light: #8a8278;
+            --accent-purple: #6f5f8e;
+            --accent-blue: #5a7185;
+            --accent-light-blue: #ecebe5;
+            --accent-light-purple: #efece4;
+            --accent-yellow: #d9c489;
+            --accent-orange: #b8895a;
         }
 
         body {
-            font-family: 'KaiTi', 'STKaiti', 'BiauKai', 'Zhi Mang Xing', serif;
+            font-family: 'Caveat', 'KaiTi', 'STKaiti', 'BiauKai', 'Zhi Mang Xing', 'Patrick Hand', cursive;
             background-color: var(--primary-bg);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0,0,0,0.015) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0,0,0,0.015) 0%, transparent 50%),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
             color: var(--text-main);
             margin: 0;
             overflow-x: hidden;
@@ -131,15 +139,23 @@
 
         /* ===== SPLASH 全新样式 ===== */
         #splash-screen {
-            background-color: #fcf9f5;
+            background-color: var(--paper-bg);
         }
-        /* 背景图遮罩层 */
+        /* 背景图层（无白色蒙版，加模糊避免撞色） */
         .splash-bg {
-            background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=1600');
+            background-image: url('微信图片_20260719232940_212_3.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.25;
+            filter: blur(10px) brightness(0.9);
+            transform: scale(1.12);
             transition: opacity 1.2s ease;
+        }
+        /* 背景上的半透明纸面遮罩，柔化色调 */
+        .splash-bg-veil {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(247,243,234,0.35), rgba(247,243,234,0.55));
+            pointer-events: none;
         }
         /* 每个阶段的弹出动画 */
         .phase-pop {
@@ -171,17 +187,18 @@
 
         /* ===== ① 圆形头像 ===== */
         .avatar-circle {
-            width: 96px;
-            height: 96px;
+            width: 104px;
+            height: 104px;
             border-radius: 50%;
-            border: 4px solid #ffffff;
-            box-shadow: 0 8px 28px rgba(157, 140, 242, 0.30), 0 0 0 3px rgba(157, 140, 242, 0.15);
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.25), 0 6px 20px rgba(0,0,0,0.25), 0 0 0 6px rgba(255,255,255,0.4);
             overflow: hidden;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            filter: grayscale(0.25) contrast(1.05);
         }
         .avatar-circle:hover {
             transform: scale(1.04) rotate(-2deg);
@@ -193,31 +210,33 @@
             display: block;
         }
 
-        /* ===== ② 圆角长框按钮（药丸形状） ===== */
+        /* ===== ② 圆角长框按钮（药丸形状，墨黑风） ===== */
         .enter-pill {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             padding: 14px 32px 14px 28px;
             border-radius: 9999px;
-            border: 3px solid #9d8cf2;
-            background: rgba(255, 255, 255, 0.80);
+            border: 2.5px solid #1c1a17;
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(4px);
             font-size: 1.25rem;
             font-weight: 700;
-            color: #5b4c8a;
+            color: #1c1a17;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(157, 140, 242, 0.15);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
             letter-spacing: 0.5px;
             user-select: none;
-            font-family: inherit;
+            font-family: 'Caveat', 'KaiTi', cursive;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
         }
         .enter-pill:hover {
             transform: scale(1.05);
-            background: #f5f2ff;
-            border-color: #7b66d9;
-            box-shadow: 0 8px 32px rgba(157, 140, 242, 0.30);
+            background: #1c1a17;
+            border-color: #1c1a17;
+            color: #f7f3ea;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.30);
         }
         .enter-pill:active {
             transform: scale(0.94);
@@ -232,10 +251,36 @@
             transform: translateX(5px);
         }
 
-        /* 标题微光 */
+        /* 标题：黑色加阴影 */
         .splash-title {
-            text-shadow: 0 2px 20px rgba(157, 140, 242, 0.12);
+            color: #111;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.45), 0 0 14px rgba(255,255,255,0.85);
             letter-spacing: 0.04em;
+            font-family: 'Caveat', 'KaiTi', 'STKaiti', cursive;
+            font-weight: 700;
+        }
+        /* HI / 你好 字号固定（ID 选择器 + !important，避免 JS 重置 className 时丢失） */
+        #splash-hi, #splash-nihao {
+            font-size: 3rem !important;
+            font-weight: 700 !important;
+            color: #111 !important;
+            font-family: 'Caveat', 'KaiTi', 'STKaiti', cursive !important;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.45), 0 0 14px rgba(255,255,255,0.85);
+            letter-spacing: 0.04em;
+        }
+        @media (min-width: 640px) {
+            #splash-hi, #splash-nihao { font-size: 3.75rem !important; }
+        }
+        @media (min-width: 768px) {
+            #splash-hi, #splash-nihao { font-size: 4.5rem !important; }
+        }
+
+        /* 固定 splash-final 居中布局（防止 JS 重置 className 时丢失 Tailwind 类） */
+        #splash-final {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
 
         /* 载入完成后 main 淡入 */
@@ -269,11 +314,24 @@
             z-index: 10;
         }
 
+        /* 铅笔画风格照片：柔和的灰阶+对比，营造手绘素描感 */
+        .photo-offset-border img,
+        .carousel-slide img,
+        #hobby-single-img {
+            filter: grayscale(0.45) contrast(1.08) sepia(0.12) brightness(1.02);
+            transition: filter 0.4s ease;
+        }
+        .photo-offset-border:hover img,
+        .carousel-slide.active:hover img,
+        #hobby-single-img:hover {
+            filter: grayscale(0.2) contrast(1.05) sepia(0.05) brightness(1.05);
+        }
+
         /* 响应式微调 */
         @media (max-width: 640px) {
             .avatar-circle {
-                width: 72px;
-                height: 72px;
+                width: 80px;
+                height: 80px;
             }
             .enter-pill {
                 padding: 12px 24px 12px 20px;
@@ -295,41 +353,38 @@
     <!-- ============================================================ -->
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center select-none transition-all duration-1000 ease-out">
 
-        <!-- 背景图片（独立层，透明度可调） -->
+        <!-- 背景图片（独立层，加模糊） -->
         <div class="splash-bg absolute inset-0 pointer-events-none"></div>
+        <!-- 纸面遮罩，柔化背景色调 -->
+        <div class="splash-bg-veil"></div>
 
-        <!-- 额外柔和光晕 -->
-        <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/20"></div>
-
-        <!-- 内容容器（flex 列，居中） -->
-        <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-xl px-6">
+        <!-- 内容容器（flex 列，居中对齐） -->
+        <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-2xl px-6 text-center">
 
             <!-- 阶段 1: HI -->
-            <div id="splash-hi" class="text-7xl md:text-8xl font-bold text-slate-700 tracking-wider opacity-0 scale-75 translate-y-4">
+            <div id="splash-hi" class="splash-title font-bold tracking-wider opacity-0 scale-75 translate-y-4">
                 HI
             </div>
 
             <!-- 阶段 2: 你好 -->
-            <div id="splash-nihao" class="text-6xl md:text-7xl font-bold text-indigo-400 tracking-wide opacity-0 scale-75 translate-y-4">
+            <div id="splash-nihao" class="splash-title font-bold tracking-wide opacity-0 scale-75 translate-y-4">
                 你好
             </div>
 
-            <!-- 阶段 3: 最终内容（头像 + 标题 + 圆角长框按钮） -->
-            <div id="splash-final" class="flex flex-col items-center opacity-0 scale-90 translate-y-6">
+            <!-- 阶段 3: 最终内容（头像 + 标题 + 圆角长框按钮，整体居中对齐） -->
+            <div id="splash-final" class="flex flex-col items-center w-full opacity-0 scale-90 translate-y-6">
 
-                <!-- ① 圆形头像（居中对齐，位于文字正上方） -->
-                <div class="avatar-circle mb-4">
-                    <!-- ★★★ 修改头像图片：将 src 替换为你本地的图片路径 ★★★ -->
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200&fit=crop"
-                    alt="J. Kaina 头像" />
+                <!-- ① 圆形头像（居中，位于文字正上方） -->
+                <div class="avatar-circle mb-5">
+                    <img src="微信图片_20260719232940_212_3.jpg" alt="J. Kaina 头像" />
                 </div>
 
-                <!-- 主标题（正中央） -->
-                <h1 class="splash-title text-3xl sm:text-4xl md:text-5xl font-bold text-purple-400 text-center px-2 mb-6 leading-tight">
+                <!-- 主标题（黑色加阴影，占满整行，居中，+2 字号） -->
+                <h1 class="splash-title text-5xl sm:text-6xl md:text-7xl font-bold text-center w-full px-2 mb-6 leading-tight">
                     Welcome to my channel!
                 </h1>
 
-                <!-- ② 圆角长框按钮（箭头 + click up 都在框内） -->
+                <!-- ② 圆角长框按钮（黑色，与头像/文字居中对齐） -->
                 <button id="enter-btn" class="enter-pill">
                     <span class="enter-arrow">→</span>
                     click up
@@ -395,7 +450,7 @@
                 </div>
                 <div class="w-full md:w-5/12 flex justify-center items-center">
                     <div class="relative w-72 h-80 md:w-80 md:h-[380px] photo-offset-border">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600" alt="ME" class="w-full h-full object-cover rounded-3xl border-2 border-slate-700 bg-slate-50 zoom-cursor p-2">
+                        <img src="微信图片_20260720003727_217_3.jpg" alt="ME" class="w-full h-full object-cover rounded-3xl border-2 border-slate-700 bg-slate-50 zoom-cursor p-2">
                     </div>
                 </div>
             </div>
@@ -437,7 +492,7 @@
                                 <td class="py-5 px-4 text-slate-700">天蝎座 🦂</td>
                             </tr>
                             <tr class="border-b border-dashed border-indigo-100 hover:bg-indigo-50/20 transition-all">
-                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">TEL</td>
+                                <td class="py-5 px-4 font-black text-indigo-500 uppercase tracking-wider text-sm">EMAIL</td>
                                 <td class="py-5 px-4">
                                     <span class="text-indigo-600 hover:underline cursor-pointer font-bold" onclick="copyEmail()" title="点击复制邮箱">
                                         polarhey@163.com
@@ -512,10 +567,10 @@
                         <div class="sketch-border w-full h-[360px] max-w-lg p-3 bg-white relative group overflow-hidden" id="ug-carousel" onmouseenter="pauseCarousel('ug')" onmouseleave="startCarousel('ug')">
                             <div class="relative w-full h-full overflow-hidden rounded-xl">
                                 <div class="carousel-slide active" data-index="0">
-                                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    <img src="微信图片_20260719232946_216_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                 </div>
                                 <div class="carousel-slide" data-index="1">
-                                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    <img src="微信图片_20260719232945_215_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                 </div>
                             </div>
                             <div class="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30">
@@ -534,13 +589,13 @@
                         <div class="sketch-border w-full h-[360px] max-w-lg p-3 bg-white relative group overflow-hidden" id="pg-carousel" onmouseenter="pauseCarousel('pg')" onmouseleave="startCarousel('pg')">
                             <div class="relative w-full h-full overflow-hidden rounded-xl">
                                 <div class="carousel-slide active" data-index="0">
-                                    <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    <img src="微信图片_20260719232343_210_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                 </div>
                                 <div class="carousel-slide" data-index="1">
-                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    <img src="微信图片_20260719232343_210_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                 </div>
                                 <div class="carousel-slide" data-index="2">
-                                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                    <img src="微信图片_20260719232343_210_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                 </div>
                             </div>
                             <div class="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30">
@@ -554,17 +609,17 @@
                         </div>
                     </div>
                     <div class="md:col-span-6 flex flex-col justify-center order-1 md:order-2">
-                        <h3 class="text-2xl font-black text-slate-800 border-b border-indigo-100 pb-3 mb-6 uppercase text-right">Graduate</h3>
+                        <h3 class="text-2xl font-black text-slate-800 border-b border-indigo-100 pb-3 mb-6 uppercase text-right">Postgraduate</h3>
                         <div id="pg-timeline" class="space-y-4 text-right">
                             <div onclick="switchExpNode('pg', 0)" class="exp-item active sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
-                                <span class="text-xs text-purple-500 font-bold">2023 - Summer</span>
+                                <span class="text-xs text-purple-500 font-bold">2024 - Summer</span>
                                 <h4 class="text-lg font-bold text-slate-800 mt-1">寒暑假实践</h4>
                                 <p class="text-sm text-slate-600 mt-1">探寻非物质文化遗产，设计沉浸式交互展示装置，用现代方式赋能传统工艺。</p>
                             </div>
                             <div onclick="switchExpNode('pg', 1)" class="exp-item sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
-                                <span class="text-xs text-purple-500 font-bold">2024 - Internship</span>
-                                <h4 class="text-lg font-bold text-slate-800 mt-1">前端开发实习</h4>
-                                <p class="text-sm text-slate-600 mt-1">参与平台体验优化及动态大屏、微前端模块开发，深入实践前端工程化与可用性测试。</p>
+                                <span class="text-xs text-purple-500 font-bold">2025 - Internship</span>
+                                <h4 class="text-lg font-bold text-slate-800 mt-1">实习</h4>
+                                <p class="text-sm text-slate-600 mt-1">实习期间在实践中积累经验，提升专业能力与综合素养。</p>
                             </div>
                             <div onclick="switchExpNode('pg', 2)" class="exp-item sketch-border-sm p-4 bg-slate-50 cursor-pointer hover:bg-indigo-50/50 transition-all">
                                 <span class="text-xs text-purple-500 font-bold">Everyday Life</span>
@@ -612,19 +667,23 @@
                     </div>
                     <div class="w-full flex-grow flex flex-col gap-6">
                         <div class="relative w-full h-[320px] bg-slate-50 rounded-2xl overflow-hidden border border-dashed border-slate-300 flex items-center justify-center p-2">
-                            <img id="hobby-single-img" src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover rounded-xl zoom-cursor">
+                            <img id="hobby-single-img" src="微信图片_20260719232944_214_3.jpg" class="w-full h-full object-cover rounded-xl zoom-cursor">
                             <div id="hobby-bead-slider" class="w-full h-full hidden relative" onmouseenter="pauseCarousel('bead')" onmouseleave="startCarousel('bead')">
                                 <div class="relative w-full h-full overflow-hidden rounded-xl">
                                     <div class="carousel-slide active" data-index="0">
-                                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                        <img src="微信图片_20260719231945_205_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                     </div>
                                     <div class="carousel-slide" data-index="1">
-                                        <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover zoom-cursor">
+                                        <img src="微信图片_20260719231947_207_3.jpg" class="w-full h-full object-cover zoom-cursor">
+                                    </div>
+                                    <div class="carousel-slide" data-index="2">
+                                        <img src="微信图片_20260719231944_204_3.jpg" class="w-full h-full object-cover zoom-cursor">
                                     </div>
                                 </div>
                                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                                     <span onclick="setBeadSlide(0)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50 active-dot"></span>
                                     <span onclick="setBeadSlide(1)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
+                                    <span onclick="setBeadSlide(2)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
                                 </div>
                             </div>
                         </div>
@@ -923,7 +982,7 @@
         const mediaCarousels = {
             ug: { activeIndex: 0, maxCount: 2, handle: null, selector: 'ug-carousel' },
             pg: { activeIndex: 0, maxCount: 3, handle: null, selector: 'pg-carousel' },
-            bead: { activeIndex: 0, maxCount: 2, handle: null, selector: 'hobby-bead-slider' }
+            bead: { activeIndex: 0, maxCount: 3, handle: null, selector: 'hobby-bead-slider' }
         };
 
         function switchExpNode(group, index) {
@@ -980,13 +1039,13 @@
 
         const hobbiesDatabase = [
             { pos: 30, title: "打羽毛球 🏸", label: "日常活动", text: "一有空闲就和好朋友相约球场，在汗水与羽球飞舞中，忘却所有压力！", type: "single",
-                src: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800" },
+                src: "微信图片_20260719232944_214_3.jpg" },
             { pos: 50, title: "王者荣耀 🎮", label: "段位争霸", text: "偶尔与老友激情开黑，默契配合瞬间翻盘，享受策略博弈与指尖流光的快感。", type: "single",
-                src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" },
+                src: "微信图片_20260720003730_220_3.jpg" },
             { pos: 60, title: "燕云十六声 ⚔️", label: "国风武侠", text: "壮丽悠远的武侠世界，漫步于无缝的大好山河，感受原汁原味的古典中式浪漫。", type: "single",
-                src: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800" },
+                src: "微信图片_20260720003728_218_3.jpg" },
             { pos: 70, title: "洛克王国 🌟", label: "童年情怀", text: "承载童年幻想的神奇大陆，那些轻快动听的小曲，总能瞬间带回无忧的时光。", type: "single",
-                src: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=800" },
+                src: "微信图片_20260720003729_219_3" },
             { pos: 80, title: "拼豆手作 🧩", label: "拼豆展示", text: "将彩色微小颗粒拼凑组合，通过温控熨平，打造属于自己的像素艺术乐园！", type: "carousel", src: "carousel" },
             { pos: 100, title: "悬疑剧爱好者 🕵️‍♂️", label: "神剧发烧友", text: "重度烧脑迷，沉迷于精细宏伟的悬疑剧情，在层层线索中探寻真相与人性边界。", type: "single",
                 src: "https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800" }
