@@ -668,19 +668,23 @@
                             <div id="hobby-bead-slider" class="w-full h-full hidden relative" onmouseenter="pauseCarousel('bead')" onmouseleave="startCarousel('bead')">
                                 <div class="relative w-full h-full overflow-hidden rounded-xl">
                                     <div class="carousel-slide active" data-index="0">
-                                        <img src="微信图片_20260719231945_205_3.jpg" class="w-full h-full object-contain zoom-cursor">
+                                        <img src="微信图片_20260720010654_223_3.jpg" class="w-full h-full object-contain zoom-cursor">
                                     </div>
                                     <div class="carousel-slide" data-index="1">
-                                        <img src="微信图片_20260719231947_207_3.jpg" class="w-full h-full object-contain zoom-cursor">
+                                        <img src="微信图片_20260720010654_223_3.jpg" class="w-full h-full object-contain zoom-cursor">
                                     </div>
                                     <div class="carousel-slide" data-index="2">
-                                        <img src="微信图片_20260719231944_204_3.jpg" class="w-full h-full object-contain zoom-cursor">
+                                        <img src="微信图片_20260720010636_221_3.jpg" class="w-full h-full object-contain zoom-cursor">
+                                    </div>
+                                    <div class="carousel-slide" data-index="3">
+                                        <img src="微信图片_20260719231947_207_3.jpg" class="w-full h-full object-contain zoom-cursor">
                                     </div>
                                 </div>
                                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                                     <span onclick="setBeadSlide(0)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50 active-dot"></span>
                                     <span onclick="setBeadSlide(1)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
                                     <span onclick="setBeadSlide(2)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
+                                    <span onclick="setBeadSlide(3)" class="w-2.5 h-2.5 bg-white border border-slate-400 rounded-full cursor-pointer opacity-50"></span>
                                 </div>
                             </div>
                         </div>
@@ -979,7 +983,7 @@
         const mediaCarousels = {
             ug: { activeIndex: 0, maxCount: 2, handle: null, selector: 'ug-carousel' },
             pg: { activeIndex: 0, maxCount: 2, handle: null, selector: 'pg-carousel' },
-            bead: { activeIndex: 0, maxCount: 3, handle: null, selector: 'hobby-bead-slider' }
+            bead: { activeIndex: 0, maxCount: 4, handle: null, selector: 'hobby-bead-slider' }
         };
 
         function switchExpNode(group, index) {
